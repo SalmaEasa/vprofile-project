@@ -42,7 +42,7 @@ pipeline {
         
         stage('Test'){
             steps{
-                sh 'mvn -s settings.xml test'
+                sh 'mvn -s settings.xml test -DargLine="--add-opens java.base/java.lang=ALL-UNNAMED"'
             }
         }
 
@@ -52,8 +52,8 @@ pipeline {
             }
             steps {
                 withSonarQubeEnv("${SONARSERVER}") {
-                    sh '''InaccessibleObjectException
-                        export SONAR_SCANNER_OPTS="-Xmx512m --add-opens java.base/java.lang=ALL-UNNAMED \
+                    sh '''export SONAR_SCANNER_OPTS="-Xmx512m --add-opens java.base/java.lang=ALL-UNNAMED"
+                        ${scannerHome}/bin/sonar-scanner \
                     -Dsonar.projectName=vprofile \
                     -Dsonar.projectVersion=1.0 \
                     -Dsonar.sources=src/ \
