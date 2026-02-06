@@ -52,7 +52,8 @@ pipeline {
             }
             steps {
                 withSonarQubeEnv("${SONARSERVER}") {
-                    sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=vprofile \
+                    sh '''InaccessibleObjectException
+                        export SONAR_SCANNER_OPTS="-Xmx512m --add-opens java.base/java.lang=ALL-UNNAMED \
                     -Dsonar.projectName=vprofile \
                     -Dsonar.projectVersion=1.0 \
                     -Dsonar.sources=src/ \
